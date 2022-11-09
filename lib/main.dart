@@ -1,45 +1,35 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(Index());
+  runApp(MyApp());
 }
-
+/*
 class Index extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
-}
+}*/
 
-class _MyAppState extends State<Index> {
-  int _selectedIndex = 0;
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(builder: (context) => SecondRoute()),
-    // );
-  }
-
-  // _onTap(int tabIndex) {
-  //   setState(() {
-  //     _selectedIndex = tabIndex;
-  //   });
-  //   switch (tabIndex) {
-  //     case 0:
-  //       break;
-  //     case 1:
-  //       break;
-  //     case 2:
-  //       break;
-  //   }
-  // }
-
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: Scaffold(
+      title: 'Naviation Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const FirstPage(),
+    );
+  }
+}
+
+class SecondPage extends StatelessWidget {
+  const SecondPage({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
       backgroundColor: Color(0xff252525),
       appBar: AppBar(
         title: new Text(
@@ -51,6 +41,16 @@ class _MyAppState extends State<Index> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Color(0xff000000),
+        onTap: (value) {
+          if (value == 0)
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return const FirstPage();
+            }));
+          if (value == 1)
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return const ThirdPage();
+            }));
+        },
         items: [
           new BottomNavigationBarItem(
             label: 'Accueil',
@@ -65,8 +65,117 @@ class _MyAppState extends State<Index> {
             label: 'Profil',
           ),
         ],
-        currentIndex: _selectedIndex, //New
-        onTap: _onItemTapped,
+      ),
+      body: const Center(
+        child: Text(
+          'PAGE PROFIL',
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+    );
+  }
+}
+
+class ThirdPage extends StatelessWidget {
+  const ThirdPage({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color(0xff252525),
+      appBar: AppBar(
+        title: new Text(
+          'MotoPlace',
+          style: TextStyle(color: Colors.white),
+        ),
+        centerTitle: true,
+        backgroundColor: Color(0xff000000),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Color(0xff000000),
+        onTap: (value) {
+          if (value == 0)
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return const FirstPage();
+            }));
+          if (value == 2)
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return const SecondPage();
+            }));
+        },
+        items: [
+          new BottomNavigationBarItem(
+            label: 'Accueil',
+            icon: Icon(Icons.home, color: Colors.white, size: 28),
+          ),
+          new BottomNavigationBarItem(
+            icon: Icon(Icons.motorcycle, color: Colors.white, size: 28),
+            label: 'Achat',
+          ),
+          new BottomNavigationBarItem(
+            icon: Icon(Icons.person, color: Colors.white, size: 28),
+            label: 'Profil',
+          ),
+        ],
+      ),
+      body: const Center(
+        child: Text(
+          'PAGE ACHAT',
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+    );
+  }
+}
+
+class FirstPage extends StatelessWidget {
+  const FirstPage({Key? key}) : super(key: key);
+
+//   int _selectedIndex = 0;
+// void _onItemTapped(int index) {
+
+//       _selectedIndex = index;
+
+//     //_navigation(index);
+//   }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color(0xff252525),
+      appBar: AppBar(
+        title: new Text(
+          'MotoPlace',
+          style: TextStyle(color: Colors.white),
+        ),
+        centerTitle: true,
+        backgroundColor: Color(0xff000000),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Color(0xff000000),
+        onTap: (value) {
+          if (value == 2)
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return const SecondPage();
+            }));
+          if (value == 1)
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return const ThirdPage();
+            }));
+        },
+        items: [
+          new BottomNavigationBarItem(
+            label: 'Accueil',
+            icon: Icon(Icons.home, color: Colors.white, size: 28),
+          ),
+          new BottomNavigationBarItem(
+            icon: Icon(Icons.motorcycle, color: Colors.white, size: 28),
+            label: 'Achat',
+          ),
+          new BottomNavigationBarItem(
+            icon: Icon(Icons.person, color: Colors.white, size: 28),
+            label: 'Profil',
+          ),
+        ],
       ),
       body: ListView(
         padding: const EdgeInsets.all(8),
@@ -126,9 +235,7 @@ class _MyAppState extends State<Index> {
           ),
           ElevatedButton(
             child: Text('Like'),
-            onPressed: () {
-              print('Hello');
-            },
+            onPressed: () {},
           ),
           Container(
               child: Text(
@@ -160,25 +267,6 @@ class _MyAppState extends State<Index> {
             },
           ),
         ],
-      ),
-    ));
-  }
-}
-
-class SecondRoute extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Second Route'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context); // Navigate back to first route when tapped.
-          },
-          child: const Text('Go back!'),
-        ),
       ),
     );
   }
